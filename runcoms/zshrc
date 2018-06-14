@@ -11,3 +11,38 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+# Start rbenv
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+ 
+# Add homebrew to the completion path
+fpath=("/usr/local/bin/" $fpath)
+
+# only fools wouldn't do this ;-)
+export EDITOR="subl -n -w"
+
+# Who doesn't want home and end to work?
+bindkey '\e[1~' beginning-of-line
+bindkey '\e[4~' end-of-line
+
+# SL API
+alias sl=slcli
+
+# Setup go
+export GOPATH=/source/go
+export PATH=$GOPATH:$GOPATH/bin:$PATH
+
+decode_saml () {
+	pbpaste | base64 --decode | xmllint --format - | tee >(subl -n -w &)
+}	
+
+getip () { dig +short myip.opendns.com @resolver1.opendns.com }
+
+# Add scripts to path
+export PATH="$PATH:$HOME/.scripts"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+export PATH="/usr/local/opt/gdal2/bin:$PATH"
+
+alias brewski='brew update && brew upgrade && brew cleanup; brew doctor'
